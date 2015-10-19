@@ -5,6 +5,7 @@ RSpec.describe User, type: :model do
 
   it { should validate_presence_of(:name) }
   it { should validate_length_of(:name).is_at_least(1) }
+  it { should allow_value("Bloccit User").for(:name) }
 
   it { should validate_presence_of(:email) }
   it { should validate_uniqueness_of(:email) }
@@ -42,5 +43,12 @@ RSpec.describe User, type: :model do
    it "should be an invalid user due to incorrectly formatted email address" do
      expect(user_with_invalid_email_format).to_not be_valid
    end
- end
+  end
+
+  describe "correctly formatted name" do
+    it "should correctly format the name" do
+      user = User.create!(name: "BlocciT user", email: "user@bloccit.com", password: "password")
+      expect(user.name).to eq("Bloccit User")
+    end
+  end
 end
