@@ -12,6 +12,7 @@ class TopicsController < ApplicationController
   end
 
   def create
+    # raise params.inspect
     @topic = Topic.new
     @topic.name = params[:topic][:name]
     @topic.description = params[:topic][:description]
