@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   # get '/topics/:id'
   # post '/topics' => 'topics#create'
     resources :posts, except: [:index]
+    
     resources :sponsored_posts, except: [:index]
   end
 
