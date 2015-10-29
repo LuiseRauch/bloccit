@@ -6,6 +6,7 @@ class Post < ActiveRecord::Base
   has_many :favorites, dependent: :destroy
   has_many :labelings, as: :labelable
   has_many :labels, through: :labelings
+  has_one :rating
 
   default_scope { order('rank DESC') }
 
