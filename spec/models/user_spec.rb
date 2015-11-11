@@ -109,4 +109,36 @@ RSpec.describe User, type: :model do
       expect(User.avatar_url(known_user, 48)).to eq(expected_gravatar)
     end
   end
+
+  describe "#has_posts" do
+    it "returns false if the user doesn't have posts" do
+      expect(user.has_posts?).to eq false
+    end
+    it "returns true if the user has posts" do
+      user.posts << create(:post, user: user)
+      expect(user.has_posts?).to eq true
+    end
+  end
+
+  describe "#has_comments" do
+    it "returns false if the user doesn't have comments" do
+      expect(user.has_comments?).to eq false
+    end
+    it "returns true if the user has comments" do
+      user.posts << create(:post, user: user)
+      user.posts.first.comments << build(:comment, user: user)
+      expect(user.has_comments?).to eq true
+    end
+  end
+
+  describe "#has_favorites" do
+    it "returns false if the user doesn't have favorites" do
+      expect(user.has_favorites?).to eq false
+    end
+    it "returns true if the user has favorites" do
+      post = create(:post, user: user)
+      user.favorites << Favorite.create!(post: post)
+      expect(user.has_favorites?).to eq true
+    end
+  end
 end
