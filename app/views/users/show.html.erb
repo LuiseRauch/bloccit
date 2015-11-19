@@ -18,8 +18,8 @@
     </div>
   </div>
 </div>
-<h2>Posts</h2>
 <% if @user.has_posts? %>
+  <h2>Posts</h2>
   <%= render @user.posts %>
 <% else %>
   <div class="media">
@@ -27,8 +27,8 @@
   </div>
 <% end %>
 
-<h2>Comments</h2>
 <% if @user.has_comments? %>
+  <h2>Comments</h2>
   <%= render @user.comments %>
 <% else %>
   <div class="media">
@@ -36,8 +36,8 @@
   </div>
 <% end %>
 
-<h2>Favorited Posts</h2>
 <% if @user.has_favorites? %>
+  <h2>Favorited Posts</h2>
   <% @user.favorites.each do |favorite| %>
     <%= render partial: 'users/favorited', locals: { post: favorite.post } %>
   <% end %>
