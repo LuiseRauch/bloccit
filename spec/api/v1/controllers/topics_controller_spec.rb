@@ -3,6 +3,7 @@ require 'rails_helper'
  RSpec.describe Api::V1::TopicsController, type: :controller do
    let(:my_user) { create(:user) }
    let(:my_topic) { create(:topic) }
+   let(:my_post) { create(:post, topic: my_topic, user: my_user) }
 
    context "unauthenticated user" do
      it "GET index returns http success" do
@@ -94,7 +95,7 @@ require 'rails_helper'
 
      describe "DELETE destroy" do
        before { delete :destroy, id: my_topic.id }
-       
+
        it "returns http success" do
          expect(response).to have_http_status(:success)
        end
@@ -106,6 +107,25 @@ require 'rails_helper'
        end
        it "deletes my_topic" do
          expect{ Topic.find(my_topic.id) }.to raise_exception(ActiveRecord::RecordNotFound)
+       end
+     end
+
+     describe "POST create_post" do
+       before do
+         @new_post = build(:post)
+         post :create_post, id: my_topic.id, post: {title: @new_post.title, body: @new_post.body, user_id: my_user.id}
+       end
+
+       it "returns http success" do
+         expect(response).to have_http_status(:success)
+       end
+       it "returns json content type" do
+         expect(response.content_type).to eq 'application/json'
+       end
+       it "creates a post with the correct attributes" do
+         hashed_json = JSON.parse(response.body)
+         expect(@new_post.title).to eq hashed_json["title"]
+         expect(@new_post.body).to eq hashed_json["body"]
        end
      end
    end
