@@ -44,4 +44,8 @@ class User < ActiveRecord::Base
   def has_favorites?
     favorites.count > 0
   end
+
+  def has_comments_or_posts?
+    has_posts? || has_comments?
+  end
 end

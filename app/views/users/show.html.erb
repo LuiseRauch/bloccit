@@ -18,22 +18,27 @@
     </div>
   </div>
 </div>
-<% if @user.has_posts? %>
-  <h2>Posts</h2>
-  <%= render @user.posts %>
-<% else %>
-  <div class="media">
-    <%= current_user.name %> has not submitted any posts yet.
-  </div>
-<% end %>
 
-<% if @user.has_comments? %>
-  <h2>Comments</h2>
-  <%= render @user.comments %>
+<% if @user.has_comments_or_posts? %>
+  <% if @user.has_posts? %>
+    <h2>Posts</h2>
+    <%= render @user.posts %>
+  <% else %>
+    <div class="media">
+      <%= current_user.name %> has not submitted any posts yet.
+    </div>
+  <% end %>
+
+  <% if @user.has_comments? %>
+    <h2>Comments</h2>
+    <%= render @user.comments %>
+  <% else %>
+    <div class="media">
+      <%= current_user.name %> has not submitted any comments yet.
+    </div>
+  <% end %>
 <% else %>
-  <div class="media">
-    <%= current_user.name %> has not submitted any comments yet.
-  </div>
+  <%= current_user.name %> has no posts or comments
 <% end %>
 
 <% if @user.has_favorites? %>
