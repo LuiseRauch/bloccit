@@ -14,6 +14,21 @@ require 'rails_helper'
        get :show, id: my_post.id
        expect(response).to have_http_status(:success)
      end
+     it "GET show returns child comments" do
+       get :show, id: my_post.id
+       response_hash = JSON.parse response.body
+       expect(response_hash['comments']).to_not be_nil
+     end
+     it "GET show returns child votes" do
+       get :show, id: my_post.id
+       response_hash = JSON.parse response.body
+       expect(response_hash['votes']).to_not be_nil
+     end
+     it "GET show returns child favorites" do
+       get :show, id: my_post.id
+       response_hash = JSON.parse response.body
+       expect(response_hash['favorites']).to_not be_nil
+     end
      it "PUT update returns http unauthenticated" do
        put :update, topic_id: my_topic.id, id: my_post.id, post: {title: RandomData.random_sentence, body: RandomData.random_paragraph}
        expect(response).to have_http_status(401)
@@ -36,6 +51,21 @@ require 'rails_helper'
      it "GET show returns http success" do
        get :show, id: my_post.id
        expect(response).to have_http_status(:success)
+     end
+     it "GET show returns child comments" do
+       get :show, id: my_post.id
+       response_hash = JSON.parse response.body
+       expect(response_hash['comments']).to_not be_nil
+     end
+     it "GET show returns child votes" do
+       get :show, id: my_post.id
+       response_hash = JSON.parse response.body
+       expect(response_hash['votes']).to_not be_nil
+     end
+     it "GET show returns child favorites" do
+       get :show, id: my_post.id
+       response_hash = JSON.parse response.body
+       expect(response_hash['favorites']).to_not be_nil
      end
      it "PUT update returns http forbidden" do
        put :update, topic_id: my_topic.id, id: my_post.id, post: {title: RandomData.random_sentence, body: RandomData.random_paragraph}

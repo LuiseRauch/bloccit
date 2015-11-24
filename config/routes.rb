@@ -29,6 +29,7 @@ Rails.application.routes.draw do
         # '/topics/:id/create_post'
       end
       resources :posts, only: [:index, :show, :update, :destroy]
+      resources :comments, only: [:index, :show]
     end
   end
 end
